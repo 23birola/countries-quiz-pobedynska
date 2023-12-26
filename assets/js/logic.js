@@ -11,9 +11,18 @@ const initials = document.getElementById('initials');
 
 let time;
 let timerId;
-export let score;
-
+let score;
 let i = 0;
+
+function stopQuize() {
+      clearInterval(timerId);
+      score = 0;
+      quetionsWrapper.setAttribute('class', 'hide');
+      startPage.setAttribute('class', 'start');
+}
+
+// function that starts the quiz
+
 function startQuize() {
   choices.textContent = '';
   i = 0;
@@ -33,7 +42,9 @@ function startQuize() {
   startPage.setAttribute('class', 'hide');
   quetionsWrapper.setAttribute('class', 'start');
   showQustion(i);
-  }
+}
+  
+// function that shows qustions
 
 function showQustion(i) {
   questionTitle.textContent = questions[i].question;
@@ -44,22 +55,14 @@ function showQustion(i) {
   }
 }
 
-let user = {
-  userIn: '',
-  userScore: 0,
-};
-
-
-console.log(addScoreBtn);
-
-(addScoreBtn) && addScoreBtn.addEventListener('click', addScore);
-
+// function that adds results to the highscores
 
 function addScore() {
   localStorage.setItem(initials.value, score);
   window.location.href = '/highscores.html';
 };
 
+(startBtn) && startBtn.addEventListener('click', startQuize);
 
 (choices) && choices.addEventListener('click', function handleChoice(e) {
   e.preventDefault();
@@ -71,7 +74,6 @@ function addScore() {
     if (time <= 0) {
       time = 0;
       score = 0;
-      console.log(score);
       timer.textContent = time;
       clearInterval(timerId);
       alert('Time is over!!! Try again');
@@ -98,12 +100,11 @@ function addScore() {
   }
 });
 
+(addScoreBtn) && addScoreBtn.addEventListener('click', addScore);
 
-//startPage.setAttribute('class', 'hide');
+// Quize questions
 
-(startBtn) && startBtn.addEventListener('click', startQuize);
-
-  const questions = [
+const questions = [
     {
       question: 'What is the capital of the United Kingdom?',
       options: ['Paris', 'London', 'Manchester', 'Edinburgр'],
@@ -130,5 +131,3 @@ function addScore() {
       corectAnswer: 'Kyiv',
     }
 ];
-console.log(questions);
-//export { score };
