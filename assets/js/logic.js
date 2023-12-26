@@ -8,39 +8,42 @@ const endScreen = document.getElementById('end-screen');
 const finalScore = document.getElementById('final-score');
 const addScoreBtn = document.getElementById('submit');
 const initials = document.getElementById('initials');
+const infoMessage = document.getElementById('message');
 
 let time;
 let timerId;
 let score;
 let i = 0;
 
-function stopQuize() {
-      clearInterval(timerId);
-      score = 0;
-      quetionsWrapper.setAttribute('class', 'hide');
-      startPage.setAttribute('class', 'start');
+function stopQuiz() {
+  clearInterval(timerId);
+  score = 0;
+  infoMessage.setAttribute('class', 'message');
+  infoMessage.textContent = 'Time is over!!! Try again';
+  setTimeout(() => { quetionsWrapper.setAttribute('class', 'hide'), startPage.setAttribute('class', 'start') }, 2000);
 }
 
-// function that starts the quiz
-
-function startQuize() {
+/* function that starts the quiz */
+function startQuiz() {
   choices.textContent = '';
+  quetionsWrapper.
+  // infoMessage.textContent = '';
   i = 0;
-  time = 50;
+  time = 20;
   score = 0;
   timerId = setInterval(() => {
     timer.textContent = time;
-    time--;
-    if (time === 0) {
+    if (time > 0) {
+      time--;
+    } else {
       timer.textContent = time;
-      clearInterval(timerId);
-      score = 0;
-      quetionsWrapper.setAttribute('class', 'hide');
-      startPage.setAttribute('class', 'start');
+      stopQuiz();
     }
   }, 1000);
   startPage.setAttribute('class', 'hide');
   quetionsWrapper.setAttribute('class', 'start');
+  infoMessage.textContent = '';
+  infoMessage.setAttribute('class', '');
   showQustion(i);
 }
   
@@ -62,36 +65,32 @@ function addScore() {
   window.location.href = '/highscores.html';
 };
 
-(startBtn) && startBtn.addEventListener('click', startQuize);
+(startBtn) && startBtn.addEventListener('click', startQuiz);
 
 (choices) && choices.addEventListener('click', function handleChoice(e) {
   e.preventDefault();
   console.log(e.target.textContent);
   if (e.target.textContent === questions[i].corectAnswer) {
-    console.log('corect');
+    infoMessage.setAttribute('class', 'message');
+    infoMessage.textContent = 'Correct!!!';
   } else {
-    time -= 10;
-    if (time <= 0) {
+      infoMessage.setAttribute('class', 'message');
+      infoMessage.textContent = 'Wrong!!!';
+      time -= 10;
+      if (time <= 0) {
       time = 0;
-      score = 0;
       timer.textContent = time;
-      clearInterval(timerId);
-      alert('Time is over!!! Try again');
-      quetionsWrapper.setAttribute('class', 'hide');
-      startPage.setAttribute('class', 'start');
-    } else {
-      alert(`Oops! You are wrong!. The correct answer is ${questions[i].corectAnswer}`);
-    }
+      stopQuiz();
+      }
   }
+  
   i += 1;
   if (i >= questions.length) {
     score = time;
-    console.log(`score`, score);
     time = 0;
     timer.textContent = time;
     clearInterval(timerId);
-    quetionsWrapper.setAttribute('class', 'hide');
-    endScreen.setAttribute('class', 'start');
+    setTimeout(() => { quetionsWrapper.setAttribute('class', 'hide'), endScreen.setAttribute('class', 'start'); }, 1000);
     finalScore.textContent = score;
 
   } else { 
@@ -107,7 +106,7 @@ function addScore() {
 const questions = [
     {
       question: 'What is the capital of the United Kingdom?',
-      options: ['Paris', 'London', 'Manchester', 'Edinburgр'],
+      options: ['Paris', 'London', 'Manchester', 'Edinburgh'],
       corectAnswer: 'London',
     },
     {
@@ -117,12 +116,12 @@ const questions = [
     },
     {
       question: 'What is the capital of Spain?',
-      options: ['Madrid', 'Barselona', 'Milan', 'Valencia'],
+      options: ['Madrid', 'Barcelona', 'Milan', 'Valencia'],
       corectAnswer: 'Madrid',
     },
     {
       question: 'What is the capital of France?',
-      options: ['Paris', 'Marsel', 'Manchester', 'Oslo'],
+      options: ['Paris', 'Marseille', 'Manchester', 'Oslo'],
       corectAnswer: 'Paris',
     },
     {

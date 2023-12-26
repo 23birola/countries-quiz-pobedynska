@@ -86,3 +86,12 @@ li:nth-child(odd) {
   top: 10px;
   right: 10px;
 }
+
+.message {
+  padding: 10px;
+  align-items: start;
+  font-size: 25px;
+  font-weight: 700;
+  color: #563d7c;
+  border-top: 4px solid #563d7c;
+}
