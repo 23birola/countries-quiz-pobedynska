@@ -65,7 +65,7 @@ function showQustion(i) {
 
 function addScore() {
   localStorage.setItem(initials.value, score);
-  window.location.href = '/highscores.html';
+  window.location.href = './highscores.html';
 };
 
 (startBtn) && startBtn.addEventListener('click', startQuiz);
