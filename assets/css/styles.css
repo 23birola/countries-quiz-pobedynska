@@ -95,3 +95,11 @@ li:nth-child(odd) {
   color: #563d7c;
   border-top: 4px solid #563d7c;
 }
+
+.correct {
+  color: green;
+}
+
+.wrong {
+  color: red;
+}

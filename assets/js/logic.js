@@ -9,6 +9,8 @@ const finalScore = document.getElementById('final-score');
 const addScoreBtn = document.getElementById('submit');
 const initials = document.getElementById('initials');
 const infoMessage = document.getElementById('message');
+const audioCorect = new Audio('./assets/sfx/correct.wav');
+const audioWrong = new Audio('./assets/sfx/incorrect.wav');
 
 let time;
 let timerId;
@@ -18,7 +20,8 @@ let i = 0;
 function stopQuiz() {
   clearInterval(timerId);
   score = 0;
-  infoMessage.setAttribute('class', 'message');
+  i = 0;
+  infoMessage.setAttribute('class', 'message wrong');
   infoMessage.textContent = 'Time is over!!! Try again';
   setTimeout(() => { quetionsWrapper.setAttribute('class', 'hide'), startPage.setAttribute('class', 'start') }, 2000);
 }
@@ -27,7 +30,6 @@ function stopQuiz() {
 function startQuiz() {
   choices.textContent = '';
   quetionsWrapper.
-  // infoMessage.textContent = '';
   i = 0;
   time = 20;
   score = 0;
@@ -40,6 +42,7 @@ function startQuiz() {
       stopQuiz();
     }
   }, 1000);
+  console.log(i);
   startPage.setAttribute('class', 'hide');
   quetionsWrapper.setAttribute('class', 'start');
   infoMessage.textContent = '';
@@ -69,18 +72,20 @@ function addScore() {
 
 (choices) && choices.addEventListener('click', function handleChoice(e) {
   e.preventDefault();
-  console.log(e.target.textContent);
   if (e.target.textContent === questions[i].corectAnswer) {
-    infoMessage.setAttribute('class', 'message');
+    audioCorect.play();
+    infoMessage.setAttribute('class', 'message correct');
     infoMessage.textContent = 'Correct!!!';
   } else {
-      infoMessage.setAttribute('class', 'message');
+      audioWrong.play();
+      infoMessage.setAttribute('class', 'message wrong');
       infoMessage.textContent = 'Wrong!!!';
       time -= 10;
       if (time <= 0) {
-      time = 0;
-      timer.textContent = time;
-      stopQuiz();
+        time = 0;
+        timer.textContent = time;
+        stopQuiz();
+        return;
       }
   }
   
@@ -94,8 +99,12 @@ function addScore() {
     finalScore.textContent = score;
 
   } else { 
-    choices.textContent = '';
-    showQustion(i);
+    setTimeout(() => {
+      choices.textContent = '';
+      infoMessage.textContent = '';
+      infoMessage.setAttribute('class', '');
+      showQustion(i);
+    }, 1000);
   }
 });
 
