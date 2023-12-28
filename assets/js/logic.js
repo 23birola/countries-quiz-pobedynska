@@ -31,7 +31,7 @@ function startQuiz() {
   choices.textContent = '';
   quetionsWrapper.
   i = 0;
-  time = 20;
+  time = 50;
   score = 0;
   timerId = setInterval(() => {
     timer.textContent = time;
@@ -65,7 +65,7 @@ function showQustion(i) {
 
 function addScore() {
   localStorage.setItem(initials.value, score);
-  window.location.href = '/highscores.html';
+  window.location.href = 'highscores.html';
 };
 
 (startBtn) && startBtn.addEventListener('click', startQuiz);
