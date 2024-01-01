@@ -33,10 +33,11 @@ function startQuiz() {
   i = 0;
   time = 50;
   score = 0;
+  timer.textContent = time;
   timerId = setInterval(() => {
-    timer.textContent = time;
     if (time > 0) {
       time--;
+      timer.textContent = time;
     } else {
       timer.textContent = time;
       stopQuiz();
@@ -53,6 +54,7 @@ function startQuiz() {
 // function that shows qustions
 
 function showQustion(i) {
+  choices.classList.remove('disabled');
   questionTitle.textContent = questions[i].question;
   for (let j = 0; j < questions[i].options.length; j++) {
     let choice = document.createElement('button');
@@ -71,6 +73,7 @@ function addScore() {
 (startBtn) && startBtn.addEventListener('click', startQuiz);
 
 (choices) && choices.addEventListener('click', function handleChoice(e) {
+  choices.classList.add('disabled');
   e.preventDefault();
   if (e.target.textContent === questions[i].corectAnswer) {
     audioCorect.play();

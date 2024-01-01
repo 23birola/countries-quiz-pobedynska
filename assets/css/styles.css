@@ -103,3 +103,8 @@ li:nth-child(odd) {
 .wrong {
   color: red;
 }
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
